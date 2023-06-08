@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Inertia\Inertia;
+use App\Exceptions\InvalidOrderException;
+use Illuminate\Http\Request;
 
 class Handler extends ExceptionHandler
 {
@@ -23,8 +26,10 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (InvalidOrderException $e, Request $request) {
+            // return response()->view('errors.invalid-order', [], 404);
+            return Inertia::lender('statusError', ['e' => $e]);
         });
     }
+
 }

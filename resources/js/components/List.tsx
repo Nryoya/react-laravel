@@ -17,10 +17,7 @@ const List = ({ tasks, token }: Props) => {
     const fetchDelete = (id: string): void => {
         const url = route("tasks.destroy", id);
 
-        Inertia.post(url, {
-            _method: "delete",
-            _token: token,
-        });
+        Inertia.delete(url);
     };
 
     const handleDelete = (id: string) => {
