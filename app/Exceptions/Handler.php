@@ -26,10 +26,7 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->renderable(function (InvalidOrderException $e, Request $request) {
-            // return response()->view('errors.invalid-order', [], 404);
-            return Inertia::lender('statusError', ['e' => $e]);
-        });
+        //
     }
 
 }

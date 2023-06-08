@@ -20,5 +20,3 @@ use Inertia\Inertia;
 Route::get('/', [TaskController::class, 'create']); 
 
 Route::resource('/tasks', TaskController::class);
-
-Route::fallback(static fn (Task $task) => redirect()->route('tasks.index', ['tasks' => $task->all()]));
