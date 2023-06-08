@@ -27,14 +27,27 @@ class StoreTaskRequest extends FormRequest
     }
 
     /**
-     * Undocumented function
+     * 属性の設定
      *
      * @return array<string, string>
      */
-    public function attribute(): array
+    public function attributes(): array
     {
         return [
-            'name' => '名前',
+            'name' => 'やること',
+        ];
+    }
+
+    /**
+     * エラーメッセージの設定
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'required' => ':attributeは必須です。',
+            'max' => ':attributeは50文字以内で登録してください。'
         ];
     }
 }

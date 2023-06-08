@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
-import Form from "@/components/Form";
-import List from "@/components/List";
+import EditForm from "@/components/EditForm";
 import csrf_token from "@/components/Token";
 
 interface taskType {
@@ -11,20 +10,18 @@ interface taskType {
 }
 
 interface Props {
-    tasks: taskType[];
+    task: taskType;
 }
 
-const ToDo = ({ tasks }: Props) => {
-
+const Edit = ({ task }: Props) => {
     return (
         <>
             <Header />
             <div className="max-w-6xl mx-auto mt-5">
-                <Form token={csrf_token}/>
+                <EditForm token={csrf_token} task={task} />
             </div>
-            <List tasks={tasks} token={csrf_token} />
         </>
     );
 };
 
-export default ToDo;
+export default Edit;

@@ -1,24 +1,39 @@
 import { useState } from "react";
 import { usePage } from "@inertiajs/inertia-react";
 
-interface token {
-    token: string
+interface taskType {
+    id: string;
+    name: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
-const Form = ({ token } : token) => {
-    const [name, setName] = useState("");
+interface Props {
+    token: string;
+    task: taskType;
+}
+
+const EditForm = ({ token, task }: Props) => {
+    const [name, setName] = useState(task.name);
     const { errors } = usePage().props;
 
     return (
         <form
             className="w-full max-w-sm"
-            action={route('tasks.store')}
+            action={route("tasks.update", task.id)}
             onSubmit={(e) => {
-                if(!confirm("追加しますか？")) { e.preventDefault(); e.stopPropagation(); }}
-            }
+                if (!confirm("変更しますか？")) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }}
             method="post"
         >
-            {errors.name && <p className="py-2 px-3 bg-red-500 text-white rounded">{errors.name}</p>}
+            {errors.name && (
+                <p className="py-2 px-3 bg-red-500 text-white rounded">
+                    {errors.name}
+                </p>
+            )}
             <div className="flex items-center border-b border-teal-500 py-2">
                 <input type="hidden" name="_token" value={token} />
                 <input
@@ -41,4 +56,4 @@ const Form = ({ token } : token) => {
     );
 };
 
-export default Form;
+export default EditForm;

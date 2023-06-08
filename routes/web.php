@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\TaskController;
+use App\Models\Task;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,6 @@ use App\Http\Controllers\TaskController;
 |
 */
 
-Route::resource('/', TaskController::class)->only(['index', 'store']);
+Route::get('/', [TaskController::class, 'create']); 
+
+Route::resource('/tasks', TaskController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);

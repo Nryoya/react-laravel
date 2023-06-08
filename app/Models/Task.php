@@ -19,15 +19,25 @@ class Task extends Model
     ];
 
     /**
-     * Undocumented function
+     * postリクエストされたタスクの登録
      *
      * @param array<string, string> $task
      * @return void
      */
     public function store($task): void
     {
-        $this->create([
-            'name' => $task->name,
-        ]);
+        $this->name = $task['name'];
+        
+        $this->save();
+    }
+
+    /**
+     * テーブルに値が存在するか
+     *
+     * @returns Task | null
+     */
+    public function isExists(): Task | null
+    {
+        return $this->first();
     }
 }
