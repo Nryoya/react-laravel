@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { usePage } from "@inertiajs/inertia-react";
+import { Inertia } from "@inertiajs/inertia";
 
 interface taskType {
     id: string;
@@ -17,15 +18,26 @@ const EditForm = ({ token, task }: Props) => {
     const [name, setName] = useState(task.name);
     const { errors } = usePage().props;
 
+    const fetchUpdate = (): void => {
+        const url = route("tasks.update", task.id)
+        Inertia.patch(url, {
+            _token: token,
+            name: name,
+        })
+    }
+
+    const isUpdate = (e: React.FormEvent<HTMLFormElement>): void => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        confirm('変更しますか？') && fetchUpdate();
+    }
+
     return (
         <form
             className="w-full max-w-sm"
-            action={route("tasks.update", task.id)}
             onSubmit={(e) => {
-                if (!confirm("変更しますか？")) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
+                isUpdate(e)
             }}
             method="post"
         >
@@ -35,7 +47,6 @@ const EditForm = ({ token, task }: Props) => {
                 </p>
             )}
             <div className="flex items-center border-b border-teal-500 py-2">
-                <input type="hidden" name="_token" value={token} />
                 <input
                     className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
                     type="text"
@@ -49,7 +60,7 @@ const EditForm = ({ token, task }: Props) => {
                     className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
                     type="submit"
                 >
-                    追加
+                    変更
                 </button>
             </div>
         </form>

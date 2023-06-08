@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\TaskController;
 use App\Models\Task;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,6 @@ use App\Models\Task;
 
 Route::get('/', [TaskController::class, 'create']); 
 
-Route::resource('/tasks', TaskController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+Route::resource('/tasks', TaskController::class);
+
+Route::fallback(static fn (Task $task) => redirect()->route('tasks.index', ['tasks' => $task->all()]));

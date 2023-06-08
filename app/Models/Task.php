@@ -32,6 +32,19 @@ class Task extends Model
     }
 
     /**
+     * postリクエストされたタスクの変更
+     *
+     * @param array<string, string> $task
+     * @return void
+     */
+    public function modelUpdate($task): void
+    {
+        $this->name = $task['name'];
+
+        $this->save();
+    }
+
+    /**
      * テーブルに値が存在するか
      *
      * @returns Task | null

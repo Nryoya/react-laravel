@@ -57,14 +57,20 @@ class TaskController extends Controller
 
     /**
      * Display the specified resource.
+     * 
+     * @param Task $task
+     * @return RedirectResponse
      */
-    public function show(Task $task)
+    public function show(Task $task): RedirectResponse
     {
-        //
+        return redirect()->route('tasks.index', ['tasks' => $task->all()]);
     }
 
     /**
      * Show the form for editing the specified resource.
+     * 
+     * @param Task $task
+     * @return Response
      */
     public function edit(Task $task): Response
     {
@@ -73,10 +79,18 @@ class TaskController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * 
+     * @param UpdateTaskRequest $request
+     * @param Task $task
+     * @return RedirectResponse
      */
-    public function update(UpdateTaskRequest $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task): RedirectResponse
     {
-        //
+        $validated = $request->validated();
+
+        $task->modelUpdate($validated);
+
+        return redirect()->route('tasks.index', ['tasks' => $task->all()]);
     }
 
     /**
